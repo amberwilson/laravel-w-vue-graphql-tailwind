@@ -11,10 +11,6 @@
 </head>
 
 <body class="antialiased">
-<button
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Button
-</button>
 <div id="app">
     <example-component></example-component>
 </div>
