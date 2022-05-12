@@ -1,13 +1,18 @@
 <template>
-    <div v-if="error">Something went wrong...</div>
-    <div v-if="loading">Loading...</div>
-    <div v-else>
-        <PostListItem
-            v-for="post in result.posts"
-            :key="post.id"
-            :post="post"
-            class="mt-10"></PostListItem>
-    </div>
+  <div v-if="error">
+    Something went wrong...
+  </div>
+  <div v-if="loading">
+    Loading...
+  </div>
+  <div v-else>
+    <PostListItem
+      v-for="post in result.posts"
+      :key="post.id"
+      :post="post"
+      class="mt-10"
+    />
+  </div>
 </template>
 <script setup>
 import PostListItem from '@components/PostListItem'
