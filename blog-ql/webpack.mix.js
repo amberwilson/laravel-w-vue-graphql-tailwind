@@ -1,4 +1,5 @@
-const mix = require("laravel-mix");
+const mix = require('laravel-mix')
+const path = require('path')
 
 /*
  |--------------------------------------------------------------------------
@@ -11,17 +12,22 @@ const mix = require("laravel-mix");
  |
  */
 
-mix.js("resources/js/app.js", "js")
-  .vue()
-  .postCss("resources/css/app.css", "css", [require("tailwindcss")]);
+mix.alias({
+    '@components': path.join(__dirname, 'resources/js/components'),
+    '@pages': path.join(__dirname, 'resources/js/pages'),
+})
 
-if(mix.inProduction()) {
-  mix.version();
+mix.js('resources/js/app.js', 'js')
+    .vue()
+    .postCss('resources/css/app.css', 'css', [require('tailwindcss')])
+
+if (mix.inProduction()) {
+    mix.version()
 }
 
 mix.options({
-  hmrOptions: {
-    host: 'localhost',
-    port: 4206
-  }
-});
+    hmrOptions: {
+        host: 'localhost',
+        port: 4206
+    }
+})

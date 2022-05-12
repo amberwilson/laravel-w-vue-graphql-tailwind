@@ -1,15 +1,15 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
+import App from '@components/App'
+import PostPage from '@pages/PostPage'
+import PostsPage from '@pages/PostsPage'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import { createApp, h, provide } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import App from './components/App'
-import Post from './components/Post'
-import PostList from './components/PostList'
 
 const routes = [{
-    path: '/', name: 'index', component: PostList,
+    path: '/', name: 'index', component: PostsPage,
 }, {
-    path: '/post/:id', name: 'post', component: Post,
+    path: '/post/:id', name: 'post', component: PostPage,
 }]
 
 const router = createRouter({
