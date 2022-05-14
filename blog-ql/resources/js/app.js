@@ -2,6 +2,7 @@ import { ApolloClient, InMemoryCache } from '@apollo/client'
 import App from '@components/App'
 import PostPage from '@pages/PostPage'
 import PostsPage from '@pages/PostsPage'
+import TopicPostsPage from '@pages/TopicPostsPage'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import { createApp, h, provide } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -10,8 +11,10 @@ import timeago from 'vue-timeago3'
 const routes = [{
     path: '/', name: 'index', component: PostsPage,
 }, {
-    path: '/post/:id', name: 'post', component: PostPage,
-}]
+    path: '/posts/:id', name: 'post', component: PostPage,
+}, {
+    path: '/topics/:slug', name: 'topic', component: TopicPostsPage,
+},]
 
 const router = createRouter({
     // eslint-disable-next-line no-undef
