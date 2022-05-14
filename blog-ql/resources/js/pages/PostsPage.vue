@@ -3,7 +3,7 @@
     <h2 class="text-4xl">
       Posts
     </h2>
-    <PostsList />
+    <PostsList class="mt-5" />
   </div>
 </template>
 

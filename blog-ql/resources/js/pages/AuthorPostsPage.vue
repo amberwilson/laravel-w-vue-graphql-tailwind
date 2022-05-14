@@ -7,28 +7,49 @@
       >
         All Posts
       </router-link>
-      <span class="text-gray-600">/</span> Posts by {{ user?.name ?? '...' }}
+      <span class="text-gray-600">/</span>
+      {{
+        user?.name ? `Posts by ${user?.name}` : loading ? '...' : 'Author Not Found'
+      }}
     </h2>
-    <div v-if="error">
-      Something went wrong...
-    </div>
-    <div v-if="loading">
-      Loading...
-    </div>
-    <div v-else>
-      <div v-if="user.posts.length > 0">
-        <PostListItem
-          v-for="post in user.posts"
-          :key="post.id"
-          :post="post"
-          class="mt-10"
-        />
+    <div class="mt-5">
+      <div v-if="error">
+        <span class="opacity-80">Oops it looks like we couldn't find that author. You can find lots of
+          interesting stuff on the</span>
+        <router-link
+          :to="{name: 'index'}"
+          class="hover:underline"
+        >
+          home page
+        </router-link>
+        .
       </div>
-      <div
-        v-else
-        class="mt-5"
-      >
-        {{ user.name }} doesn't have any posts.
+      <div v-if="loading">
+        Loading...
+      </div>
+      <div v-else>
+        <div v-if="user?.posts?.length > 0">
+          <PostListItem
+            v-for="post in user.posts"
+            :key="post.id"
+            :post="post"
+            class="mt-10"
+          />
+        </div>
+        <div v-else-if="user !== null">
+          {{ user.name }} doesn't have any posts.
+        </div>
+        <div v-else>
+          <span class="opacity-80">Oops it looks like we couldn't find that author. You can find lots of
+            interesting stuff on the</span>
+          <router-link
+            :to="{name: 'index'}"
+            class="hover:underline"
+          >
+            home page
+          </router-link>
+          .
+        </div>
       </div>
     </div>
   </div>

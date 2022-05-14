@@ -10,18 +10,48 @@
       <span class="text-gray-600">/</span> {{ topic?.name ?? '...' }}
     </h2>
     <div v-if="error">
-      Something went wrong...
+      <span class="opacity-80">Oops it looks like we couldn't find that post. You can find lots of
+        interesting stuff on the</span>
+      <router-link
+        :to="{name: 'index'}"
+        class="hover:underline"
+      >
+        home page
+      </router-link>
+      .
     </div>
     <div v-if="loading">
       Loading...
     </div>
     <div v-else>
-      <PostListItem
-        v-for="post in topic.posts"
-        :key="post.id"
-        :post="post"
-        class="mt-10"
-      />
+      <div v-if="topic?.posts?.length > 0">
+        <PostListItem
+          v-for="post in topic.posts"
+          :key="post.id"
+          :post="post"
+          class="mt-10"
+        />
+      </div>
+      <div
+        v-else-if="topic !== null"
+        class="mt-5"
+      >
+        {{ topic.name }} doesn't have any posts.
+      </div>
+      <div
+        v-else
+        class="mt-5"
+      >
+        <span class="opacity-80">Oops it looks like we couldn't find that topic. You can find lots of
+          interesting stuff on the</span>
+        <router-link
+          :to="{name: 'index'}"
+          class="hover:underline"
+        >
+          home page
+        </router-link>
+        .
+      </div>
     </div>
   </div>
 </template>
