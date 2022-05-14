@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import App from '@components/App'
 import AuthorPostsPage from '@pages/AuthorPostsPage'
+import NotFound from '@pages/NotFound'
 import PostPage from '@pages/PostPage'
 import PostsPage from '@pages/PostsPage'
 import TopicPostsPage from '@pages/TopicPostsPage'
@@ -21,7 +22,12 @@ const routes = [
     },
     {
         path: '/authors/:id', name: 'author', component: AuthorPostsPage,
-    },]
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'not-found',
+        component: NotFound
+    }]
 
 const router = createRouter({
     // eslint-disable-next-line no-undef
