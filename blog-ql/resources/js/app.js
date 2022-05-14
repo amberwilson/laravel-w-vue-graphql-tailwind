@@ -5,6 +5,7 @@ import PostsPage from '@pages/PostsPage'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 import { createApp, h, provide } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import timeago from 'vue-timeago3'
 
 const routes = [{
     path: '/', name: 'index', component: PostsPage,
@@ -27,5 +28,5 @@ createApp({
     }, render: () => h(App),
 })
     .use(router)
-    // .use(VueApolloComponents)
+    .use(timeago, { name: 'TimeAgo' })
     .mount('#app')
