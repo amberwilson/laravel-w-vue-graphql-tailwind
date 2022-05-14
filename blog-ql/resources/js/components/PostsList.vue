@@ -21,9 +21,9 @@ import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 
 const {
-    result,
-    loading,
-    error,
+  result,
+  loading,
+  error,
 } = useQuery(gql`query getPosts {
   posts {
     id
@@ -31,10 +31,13 @@ const {
     lead
     created_at
     author {
+      id
       name
     }
     topic {
+      id
       name
+      slug
     }
   }
 }`)

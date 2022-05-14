@@ -9,25 +9,33 @@
     <p class="text-gray-600 pb-3">
       {{ post.lead }}
     </p>
-    <!-- eslint-disable vue/no-v-html -->
     <div
       class="text-sm text-gray-600"
-      v-html="authoredAt"
-    />
-    <!--eslint-enable-->
+    >
+      By
+      <router-link
+        :to="{name:'author', params: {id: post.author.id}}"
+        class="underline hover:text-black"
+      >
+        {{ post.author.name }}
+      </router-link>
+      in&nbsp;<router-link
+        :to="{name:'topic', params: {slug: post.topic.slug}}"
+        class="underline hover:text-black"
+      >
+        {{ post.topic.name }}
+      </router-link>&nbsp;•&nbsp;<TimeAgo
+        :datetime="post.created_at"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
+import { defineProps } from 'vue'
 
-import { computed, defineProps } from 'vue'
-
-const props = defineProps({
+defineProps({
   post: { type: Object, required: true }
-})
-
-const authoredAt = computed(() => {
-  return `By ${props.post.author.name}&nbsp;in ${props.post.topic.name}&nbsp;• 3 hours ago`
 })
 </script>
 

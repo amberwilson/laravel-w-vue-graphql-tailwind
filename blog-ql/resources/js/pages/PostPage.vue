@@ -9,8 +9,23 @@
       </div>
       <div v-else>
         <div class="text-lg text-gray-600">
-          By {{ post.author.name }} in {{ post.topic.name }} • 3
-          hour ago
+          By
+          <router-link
+            :to="{name:'author', params: {id: post.author.id}}"
+            class="underline hover:text-black"
+          >
+            {{ post.author.name }}
+          </router-link>
+          in&nbsp;
+          <router-link
+            :to="{name:'topic', params: {slug: post.topic.slug}}"
+            class="underline hover:text-black"
+          >
+            {{ post.topic.name }}
+          </router-link>
+          •&nbsp;<TimeAgo
+            :datetime="post.created_at"
+          />
         </div>
 
         <h1 class="text-5xl mt-10 font-bold mb-12">
@@ -31,10 +46,23 @@
           </div>
           <div class="flex flex-col justify">
             <div class="text-xl text-gray-600">
-              Written by {{ post.author.name }}
+              Written by
+              <router-link
+                :to="{name:'author', params: {id: post.author.id}}"
+                class="underline hover:text-black"
+              >
+                {{ post.author.name }}
+              </router-link>
             </div>
             <div class="text-gray-600">
-              Published in {{ post.topic.name }} on May 13, 2022
+              Published in&nbsp;<router-link
+                :to="{name:'topic', params: {slug: post.topic.slug}}"
+                class="hover:underline"
+              >
+                {{ post.topic.name }}
+              </router-link>&nbsp;•&nbsp;<TimeAgo
+                :datetime="post.created_at"
+              />
             </div>
           </div>
         </div>
@@ -48,6 +76,7 @@ import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+// import TimeAgo from 'vue-timeago3'
 
 const route = useRoute()
 
@@ -62,11 +91,14 @@ const {
     content
     created_at
     author {
+      id
       name
       avatar
     }
     topic {
+      id
       name
+      slug
     }
   }
 }`, { postId: route.params.id })
