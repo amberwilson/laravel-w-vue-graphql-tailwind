@@ -7,9 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @mixin IdeHelperBoard
+ */
 class Board extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['title', 'color', 'owner_id'];
 
     public function lists(): HasMany
     {
