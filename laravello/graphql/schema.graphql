@@ -38,4 +38,38 @@ type User {
 
     "When the account was last updated."
     updated_at: DateTime!
+
+    boards: [Board!]! @hasMany
+    cards: [Card!]! @hasMany
 }
+
+type Board {
+    id: ID!
+    title: String!
+    color: String!
+    created_at: DateTime
+    updated_at: DateTime
+    owner: User! @belongsTo
+    lists: [CardList!]! @hasMany
+}
+
+type CardList {
+    id: ID!
+    title: String!
+    created_at: DateTime
+    updated_at: DateTime
+    cards: [Card!]! @hasMany
+    board: Board! @belongsTo
+}
+
+type Card {
+    id: ID!
+    title: String!
+    order: Int!
+    created_at: DateTime
+    updated_at: DateTime
+    owner: User! @belongsTo
+    list: CardList! @belongsTo
+}
+
+
