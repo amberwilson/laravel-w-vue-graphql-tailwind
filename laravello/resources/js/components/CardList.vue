@@ -11,12 +11,14 @@
       :key="card.id"
       :card="card"
     />
+    <CardEditor />
     <CardAddButton />
   </div>
 </template>
 
 <script setup>
 import CardAddButton from '@components/CardAddButton'
+import CardEditor from '@components/CardEditor'
 import CardItem from '@components/CardItem'
 import { defineProps } from 'vue'
 

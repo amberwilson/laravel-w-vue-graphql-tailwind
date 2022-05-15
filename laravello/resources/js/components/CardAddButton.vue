@@ -14,7 +14,6 @@ import CardAdd from '../gql/CardAdd.gql'
 const { mutate: cardAddMutation } = useMutation(CardAdd)
 
 function addCard () {
-  console.log('add card')
   cardAddMutation({ title: 'Added through mutation', order: 1, listId: 1 })
 }
 </script>
