@@ -21,6 +21,17 @@ type Query {
     board(id: ID! @eq): Board @find
 }
 
+type Mutation {
+    cardAdd(input: CardAddInput! @spread): Card @create
+}
+
+input CardAddInput {
+    title: String!
+    order: Int!
+    owner_id: ID!
+    list_id: ID!
+}
+
 "Account of a person who utilizes this application."
 type User {
     "Unique primary key."
