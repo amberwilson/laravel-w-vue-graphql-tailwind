@@ -27,7 +27,21 @@ if (mix.inProduction()) {
 
 mix.options({
     hmrOptions: {
-        host: 'localhost',
-        port: 4206
+        host: 'localhost', port: 4206,
+    },
+})
+
+mix.extend('graphql', new class {
+    dependencies () {
+        return ['graphql', 'graphql-tag']
+    }
+
+    webpackRules () {
+        return {
+            test: /\.(graphql|gql)$/,
+            exclude: /node_modules/,
+            loader: 'graphql-tag/loader',
+        }
     }
 })
+mix.graphql()
