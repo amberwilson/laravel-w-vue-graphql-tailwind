@@ -2,29 +2,30 @@
   <div class="list bg-gray-300 rounded-sm p-2 mr-2">
     <div class="flex justify-between">
       <div class="text-gray-800 pl-2 pb-2 font-bold">
-        List Title
+        {{ list.title }}
       </div>
     </div>
 
-    <CardItem />
-    <CardItem />
-    <CardItem />
+    <CardItem
+      v-for="card in list.cards"
+      :key="card.id"
+      :card="card"
+    />
     <CardAddButton />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import CardAddButton from '@components/CardAddButton'
+import CardItem from '@components/CardItem'
+import { defineProps } from 'vue'
 
-<script>
-import CardItem from "@components/CardItem";
-import CardAddButton from "@components/CardAddButton";
-
-export default {
-  components: {
-    CardAddButton,
-    CardItem
-  }
-}
+defineProps({
+  list: {
+    type: Object,
+    required: true,
+  },
+})
 </script>
 <style scoped>
 .list {

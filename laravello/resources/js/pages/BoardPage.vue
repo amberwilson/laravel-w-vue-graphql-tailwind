@@ -14,22 +14,57 @@
       </div>
     </div>
 
-    <div class="h-full flex flex-1 flex-col items-stretch">
+    <div
+      class="h-full flex flex-1 flex-col items-stretch"
+    >
       <div class="mx-4 mb-2 text-white font-bold text-lg">
-        Board Title
+        <span v-if="loading">Loading...</span><span
+          v-else
+        >{{ board.title }}</span>
       </div>
-      <div class="flex flex-1 items-start overflow-x-auto mx-2">
-        <CardList />
-        <CardList />
-        <CardList />
-        <CardList />
+      <div
+        v-if="board"
+        class="flex flex-1 items-start overflow-x-auto mx-2"
+      >
+        <CardList
+          v-for="list in board.lists"
+          :key="list.id"
+          :list="list"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import CardList from "@components/CardList";</script>
+import CardList from '@components/CardList'
+import { useQuery } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
+import { computed } from 'vue'
+
+const {
+  result, // error,
+  loading,
+} = useQuery(gql`query getBoard($id: ID!) {
+  board(id: $id) {
+    id
+    title
+    lists {
+      id
+      title
+      cards {
+        id
+        title
+        order
+      }
+    }
+  }
+}
+`, { id: 1 })
+
+const board = computed(() => result.value?.board ?? null)
+
+</script>
 
 <style scoped>
 .header {

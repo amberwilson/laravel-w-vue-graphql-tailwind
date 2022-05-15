@@ -60,9 +60,9 @@ class DatabaseSeeder extends Seeder
                         ) {
                             $list->cards()->save(
                                 Card::make([
-                                    'title'    => $task,
+                                    'title' => $task,
                                     'owner_id' => $board->owner_id,
-                                    'order'    => $order++
+                                    'order' => $order++
                                 ])
                             );
                         }
