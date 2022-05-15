@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/{any?}', static function () {
-    return view('welcome');
+    return view('app');
 })->where(
     'any',
     '^(?!graphql)[\/\w\.-]*'
