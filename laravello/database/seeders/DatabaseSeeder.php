@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
                         static function (string $task) use (
                             $board,
                             $list,
-                            $order
+                            &$order
                         ) {
                             $list->cards()->save(
                                 Card::make([

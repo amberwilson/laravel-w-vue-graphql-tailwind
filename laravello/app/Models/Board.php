@@ -18,7 +18,7 @@ class Board extends Model
 
     public function lists(): HasMany
     {
-        return $this->hasMany(CardList::class, 'list_id');
+        return $this->hasMany(CardList::class, 'board_id');
     }
 
     public function owner(): BelongsTo
