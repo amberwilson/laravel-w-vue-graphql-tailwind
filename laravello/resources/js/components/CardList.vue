@@ -11,8 +11,15 @@
       :key="card.id"
       :card="card"
     />
-    <CardEditor />
-    <CardAddButton />
+    <CardEditor
+      v-if="isEditing"
+      :list="list"
+      @closed="closeEditor"
+    />
+    <CardAddButton
+      v-else
+      @click="isEditing = true"
+    />
   </div>
 </template>
 
@@ -20,7 +27,7 @@
 import CardAddButton from '@components/CardAddButton'
 import CardEditor from '@components/CardEditor'
 import CardItem from '@components/CardItem'
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 
 defineProps({
   list: {
@@ -28,6 +35,12 @@ defineProps({
     required: true,
   },
 })
+
+const isEditing = ref(false)
+
+function closeEditor () {
+  isEditing.value = false
+}
 </script>
 <style scoped>
 .list {

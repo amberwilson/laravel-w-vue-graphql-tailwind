@@ -39,15 +39,18 @@
 <script setup>
 import CardList from '@components/CardList'
 import { useQuery } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
 import { computed } from 'vue'
-import BoardQuery from '../gql/BoardWithListsAndCards.gql'
+import BOARD_QUERY from '../gql/BoardWithListsAndCards.gql'
 
 const {
   result, // error,
   loading,
-} = useQuery(BoardQuery, { id: 1 })
+} = useQuery(BOARD_QUERY, { id: 1 })
 
 const board = computed(() => result.value?.board ?? null)
+
+window.gqlhook = gql
 
 </script>
 

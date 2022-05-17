@@ -5,6 +5,9 @@ query BoardWithListsAndCards($id: ID!) {
         lists {
             id
             title
+            board {
+                id
+            }
             cards {
                 id
                 title
