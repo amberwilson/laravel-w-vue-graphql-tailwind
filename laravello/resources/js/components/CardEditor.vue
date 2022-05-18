@@ -87,11 +87,6 @@ function saveCard () {
       listId: props.list.id,
     })
   } else {
-    console.log({
-      id: +props.card.id,
-      title: title.value,
-      order: props.card.order,
-    })
     cardUpdateMutation({
       id: +props.card.id,
       title: title.value,
