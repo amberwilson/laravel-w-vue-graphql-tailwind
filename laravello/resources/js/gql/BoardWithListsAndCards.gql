@@ -12,6 +12,9 @@ query BoardWithListsAndCards($id: ID!) {
                 id
                 title
                 order
+                list {
+                    id
+                }
             }
         }
     }

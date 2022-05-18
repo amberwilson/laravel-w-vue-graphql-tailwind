@@ -6,10 +6,15 @@
     <div
       class="flex font-bold opacity-0 group-hover:opacity-100 transition-opacity ease-out duration-500"
     >
-      <div class="text-gray-400 pr-2 hover:text-gray-500">
+      <div
+        class="text-gray-400 pr-2 hover:text-gray-500"
+      >
         E
       </div>
-      <div class="text-gray-400 hover:text-gray-500">
+      <div
+        class="text-gray-400 hover:text-gray-500"
+        @click="cardDelete"
+      >
         D
       </div>
     </div>
@@ -17,14 +22,37 @@
 </template>
 
 <script setup>
+import { useMutation } from '@vue/apollo-composable'
 import { defineProps } from 'vue'
+import CARD_DELETE from '../gql/CardDelete.gql'
 
-defineProps({
+const props = defineProps({
   card: {
     type: Object,
     required: true,
   },
 })
+
+const { mutate: cardDeleteMutation } = useMutation(CARD_DELETE, {
+  update: (cache, { data: { cardDelete } }) => {
+    cache.modify({
+      id: cache.identify(props.card.list),
+      fields: {
+        cards (existingCardRefs = [], { readField }) {
+          if (existingCardRefs.some(
+            ref => readField('id', ref) === cardDelete.id,
+          )) {
+            return existingCardRefs.filter((cardRef) => readField('id', cardRef) !== cardDelete.id)
+          }
+        },
+      },
+    })
+  },
+})
+
+const cardDelete = () => {
+  cardDeleteMutation({ id: parseInt(props.card.id) })
+}
 </script>
 
 <style scoped>
