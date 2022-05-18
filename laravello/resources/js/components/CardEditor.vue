@@ -11,7 +11,7 @@
       class="rounded-sm py-1 px-3 bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus:outline-none"
       @click="saveCard"
     >
-      Save Card
+      {{ label }}
     </button>
     <button
       class="rounded-sm ml-1 py-1 px-3 bg-gray-500 hover:bg-gray-600 active:bg-gray-700 focus:outline-none"
@@ -27,11 +27,16 @@ import { useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { defineEmits, defineProps, onMounted, ref } from 'vue'
 import CARD_ADD from '../gql/CardAdd.gql'
+import CARD_UPDATE from '../gql/CardUpdate.gql'
 
-const props = defineProps({ list: { type: Object, required: true } })
+const props = defineProps({
+  list: { type: Object, required: true },
+  card: { type: Object, required: false, default: null },
+})
 const emit = defineEmits(['closed'])
 const titleInput = ref(null)
 const title = ref(null)
+const label = ref('Save Card')
 
 const { mutate: cardAddMutation } = useMutation(CARD_ADD, {
   update: (cache, { data: { cardAdd } }) => {
@@ -62,18 +67,37 @@ const { mutate: cardAddMutation } = useMutation(CARD_ADD, {
   },
 })
 
+const { mutate: cardUpdateMutation } = useMutation(CARD_UPDATE)
+
 onMounted(() => {
   titleInput.value.focus()
+  if (props.card) {
+    title.value = props.card.title
+    label.value = 'Update Card'
+  }
 })
 
 const nextOrder = () => props.list.cards.length + 1
 
 function saveCard () {
-  cardAddMutation({
-    title: title.value,
-    order: nextOrder(),
-    listId: props.list.id,
-  })
+  if (!props.card) {
+    cardAddMutation({
+      title: title.value,
+      order: nextOrder(),
+      listId: props.list.id,
+    })
+  } else {
+    console.log({
+      id: +props.card.id,
+      title: title.value,
+      order: props.card.order,
+    })
+    cardUpdateMutation({
+      id: +props.card.id,
+      title: title.value,
+      order: props.card.order,
+    })
+  }
   close()
 }
 

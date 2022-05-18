@@ -24,6 +24,7 @@ type Query {
 type Mutation {
     cardAdd(input: CardAddInput! @spread): Card @create
     cardDelete(id: ID!): Card @delete
+    cardUpdate(input: CardUpdateInput! @spread): Card @update
 }
 
 input CardAddInput {
@@ -31,6 +32,12 @@ input CardAddInput {
     order: Int!
     owner_id: ID!
     list_id: ID!
+}
+
+input CardUpdateInput {
+    id: ID!
+    title: String!
+    order: Int!
 }
 
 "Account of a person who utilizes this application."
