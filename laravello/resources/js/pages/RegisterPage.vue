@@ -6,7 +6,7 @@
       </div>
       <div class="w-full sm:shadow-xl sm:bg-white sm:py-8 sm:px-12">
         <div class="w-full text-center text-gray-600 font-bold mb-8">
-          Log in to
+          Sign up to
           Laravello
         </div>
         <form action="">
@@ -14,6 +14,13 @@
             <input
               type="text"
               placeholder="Enter email"
+              class="rounded-sm px-4 py-2 outline-none focus:outline-none border-gray-400 bg-gray-100 border-solid border-2 w-full text-sm"
+            >
+          </div>
+          <div class="w-full mb-4">
+            <input
+              type="text"
+              placeholder="Enter full name"
               class="rounded-sm px-4 py-2 outline-none focus:outline-none border-gray-400 bg-gray-100 border-solid border-2 w-full text-sm"
             >
           </div>
@@ -29,7 +36,7 @@
               type="submit"
               class="rounded-sm px-4 py-2 text-sm bg-green-500 font-bold outline-none focus:outline-none hover:bg-opacity-75 w-full active:bg-green-600 text-white disabled:opacity-25"
             >
-              Login
+              Register
             </button>
           </div>
         </form>
@@ -38,11 +45,10 @@
 
         <div class="text-center text-sm">
           <router-link
-            :to="{name: 'register'}"
+            :to="{name: 'login'}"
             class="text-blue-600 hover:underline"
           >
-            Sign up for an
-            account
+            Already have an account? Login
           </router-link>
         </div>
       </div>
