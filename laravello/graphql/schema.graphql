@@ -36,7 +36,7 @@ type Mutation {
         email: String! @rules(apply: ["required", "email", "unique:users"])
         name: String!, @rules(apply: ["required", "min:2"])
         password: String! @rules(apply: ["required", "min:8"]) @hash
-    ): User! @create
+    ): User! @create @event(dispatch: "Illuminate\\Auth\\Events\\Registered")
 }
 
 input CardAddInput {
