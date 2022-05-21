@@ -5,13 +5,15 @@
         <span>Laravello</span>
       </div>
       <div class="w-full sm:shadow-xl sm:bg-white sm:py-8 sm:px-12">
+        <ErrorList :errors="errors" />
         <div class="w-full text-center text-gray-600 font-bold mb-8">
           Sign up to
           Laravello
         </div>
-        <form action="">
+        <form @submit.prevent="register">
           <div class="w-full mb-4">
             <input
+              v-model="email"
               type="text"
               placeholder="Enter email"
               class="rounded-sm px-4 py-2 outline-none focus:outline-none border-gray-400 bg-gray-100 border-solid border-2 w-full text-sm"
@@ -19,6 +21,7 @@
           </div>
           <div class="w-full mb-4">
             <input
+              v-model="name"
               type="text"
               placeholder="Enter full name"
               class="rounded-sm px-4 py-2 outline-none focus:outline-none border-gray-400 bg-gray-100 border-solid border-2 w-full text-sm"
@@ -26,6 +29,7 @@
           </div>
           <div class="w-full mb-4">
             <input
+              v-model="password"
               type="password"
               placeholder="Enter password"
               class="rounded-sm px-4 py-2 outline-none focus:outline-none border-gray-400 bg-gray-100 border-solid border-2 w-full text-sm"
@@ -57,6 +61,36 @@
 </template>
 
 <script setup>
+import ErrorList from '@components/ErrorList'
+import { useMutation } from '@vue/apollo-composable'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import REGISTER from '../gql/Register.gql'
+import { graphQLErrors } from '../utils.js'
+
+const email = ref()
+const name = ref()
+const password = ref()
+const errors = ref([])
+
+const router = useRouter()
+
+const { mutate: registerMutation, onError, onDone } = useMutation(REGISTER)
+
+onError((error) => errors.value = graphQLErrors(error))
+
+onDone(() => {
+  errors.value = []
+  router.push({ name: 'board' })
+})
+
+function register () {
+  registerMutation({
+    email: email.value,
+    name: name.value,
+    password: password.value,
+  })
+}
 
 </script>
 

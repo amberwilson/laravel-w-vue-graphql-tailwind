@@ -5,17 +5,7 @@
         <span>Laravello</span>
       </div>
       <div class="w-full sm:shadow-xl sm:bg-white sm:py-8 sm:px-12">
-        <div
-          v-if="errors.length"
-          class="p-2 bg-red-600 text-gray-100 rounded-sm mb-6 text-center"
-        >
-          <div
-            v-for="(error, index) in errors"
-            :key="index"
-          >
-            {{ error.message }}
-          </div>
-        </div>
+        <ErrorList :errors="errors" />
         <div class="w-full text-center text-gray-600 font-bold mb-8">
           Log in to
           Laravello
@@ -64,8 +54,10 @@
 </template>
 
 <script setup>
+import ErrorList from '@components/ErrorList'
 import { useMutation } from '@vue/apollo-composable'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import LOGIN from '../gql/Login.gql'
 import { graphQLErrors } from '../utils.js'
 
@@ -73,11 +65,16 @@ const email = ref('general34@example.org')
 const password = ref('password')
 const errors = ref([])
 
+const router = useRouter()
+
 const { mutate: loginMutation, onError, onDone } = useMutation(LOGIN)
 
 onError((error) => errors.value = graphQLErrors(error))
 
-onDone(() => errors.value = [])
+onDone(() => {
+  errors.value = []
+  router.push({ name: 'board' })
+})
 
 function authenticate () {
   loginMutation({

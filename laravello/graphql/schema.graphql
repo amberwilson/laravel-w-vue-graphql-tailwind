@@ -10,7 +10,7 @@ type Query {
 
         "Search by email address."
         email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
-    ): User @find
+    ): User @find @guard
 
     "List multiple users."
     users(
@@ -18,19 +18,25 @@ type Query {
         name: String @where(operator: "like")
     ): [User!]! @paginate(defaultCount: 10)
 
-    board(id: ID! @eq): Board @find
+    board(id: ID! @eq): Board @find @guard
 }
 
 type Mutation {
-    cardAdd(input: CardAddInput! @spread): Card @create
-    cardDelete(id: ID!): Card @delete
-    cardUpdate(input: CardUpdateInput! @spread): Card @update
+    cardAdd(input: CardAddInput! @spread): Card @create @guard
+    cardDelete(id: ID!): Card @delete @guard
+    cardUpdate(input: CardUpdateInput! @spread): Card @update @guard
 
     "Log in to a new session and get the user."
     login(email: String!, password: String!): User!
 
     "Log out from the current session, showing the user one last time."
     logout: User @guard
+
+    register(
+        email: String! @rules(apply: ["required", "email", "unique:users"])
+        name: String!, @rules(apply: ["required", "min:2"])
+        password: String! @rules(apply: ["required", "min:8"]) @hash
+    ): User! @create
 }
 
 input CardAddInput {
