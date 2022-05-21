@@ -25,6 +25,12 @@ type Mutation {
     cardAdd(input: CardAddInput! @spread): Card @create
     cardDelete(id: ID!): Card @delete
     cardUpdate(input: CardUpdateInput! @spread): Card @update
+
+    "Log in to a new session and get the user."
+    login(email: String!, password: String!): User!
+
+    "Log out from the current session, showing the user one last time."
+    logout: User @guard
 }
 
 input CardAddInput {
