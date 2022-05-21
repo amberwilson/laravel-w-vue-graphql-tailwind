@@ -9,14 +9,14 @@ const httpLink = new HttpLink({
     headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content },
 })
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError((err) => {
+    const { graphQLErrors, networkError } = err
     if (graphQLErrors)
-        graphQLErrors.forEach(({ message, locations, path }) =>
+        graphQLErrors.forEach(({ message }) =>
             console.error(
                 {
-                    error: `[GraphQL error]: Message: ${message}`,
-                    locations,
-                    path,
+                    message: `[GraphQL error]: Message: ${message}`,
+                    fullError: err,
                 },
             ),
         )
