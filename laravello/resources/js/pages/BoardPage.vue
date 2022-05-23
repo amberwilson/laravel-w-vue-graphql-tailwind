@@ -3,14 +3,18 @@
     <div
       class="text-white flex justify-between items-center mb-2 bg-purple-600"
     >
-      <div class="header ml-2 w-1/3">
-        x
+      <div
+        class="header ml-2 w-1/3"
+      >
+        X
       </div>
       <div class="text-lg opacity-50 cursor-pointer hover:opacity-75">
         Laravello
       </div>
-      <div class="mr-2 w-1/3 flex justify-end">
-        x
+      <div
+        class="mr-2 w-1/3 flex justify-end"
+      >
+        {{ `Logged in as ${user.name}` }}
       </div>
     </div>
 
@@ -38,10 +42,13 @@
 
 <script setup>
 import CardList from '@components/CardList'
+import { useUserStore } from '@stores/user'
 import { useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { computed } from 'vue'
 import BOARD_QUERY from '../gql/BoardWithListsAndCards.gql'
+
+const user = useUserStore()
 
 const {
   result, // error,
