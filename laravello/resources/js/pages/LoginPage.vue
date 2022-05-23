@@ -55,6 +55,7 @@
 
 <script setup>
 import ErrorList from '@components/ErrorList'
+import { useUserStore } from '@stores/user'
 import { useMutation } from '@vue/apollo-composable'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -67,12 +68,18 @@ const errors = ref([])
 
 const router = useRouter()
 
+const user = useUserStore()
+
 const { mutate: loginMutation, onError, onDone } = useMutation(LOGIN)
 
 onError((error) => errors.value = graphQLErrors(error))
 
-onDone(() => {
+onDone((result) => {
   errors.value = []
+
+  const { id, email, name } = result.data.login
+  user.setUser(id, email, name)
+
   router.push({ name: 'board' })
 })
 
