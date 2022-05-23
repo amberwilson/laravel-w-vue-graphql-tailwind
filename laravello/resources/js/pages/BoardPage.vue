@@ -1,10 +1,13 @@
 <template>
-  <div class="h-full flex flex-col items-stretch bg-purple-500">
+  <div
+    class="h-full flex flex-col items-stretch bg-gray-500"
+    :class="bgColor"
+  >
     <div
-      class="text-white flex justify-between items-center mb-2 bg-purple-600"
+      class="header text-white flex justify-between items-center mb-2"
     >
       <div
-        class="header ml-2 w-1/3"
+        class="ml-2 w-1/3"
       >
         x
       </div>
@@ -33,7 +36,7 @@
           class="flex justify-end"
         >
           <button
-            class="header-btn"
+            class="header-btn mr-1"
             @click="router.push({name: 'login'})"
           >
             Login
@@ -85,6 +88,11 @@ const user = useUserStore()
 const route = useRoute()
 const router = useRouter()
 
+const bgColor = computed(() => ({
+  'bg-gray-500': loading,
+  [colorMap500[board.value?.color]]: true,
+}))
+
 const {
   result, // error,
   loading,
@@ -113,5 +121,6 @@ function logout () {
 <style scoped>
 .header {
   height: 40px;
+  background-color: rgba(0, 0, 0, 0.2)
 }
 </style>

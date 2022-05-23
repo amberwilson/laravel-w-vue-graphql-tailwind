@@ -2,6 +2,7 @@ query BoardWithListsAndCards($id: ID!) {
     board(id: $id) {
         id
         title
+        color
         lists {
             id
             title
