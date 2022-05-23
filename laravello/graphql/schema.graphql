@@ -24,9 +24,9 @@ type Query {
 }
 
 type Mutation {
-    cardAdd(input: CardAddInput! @spread): Card @create @guard
-    cardDelete(id: ID!): Card @delete @guard
-    cardUpdate(input: CardUpdateInput! @spread): Card @update @guard
+    cardAdd(input: CardAddInput! @spread): Card @create @guard @inject(context: "user.id", name: "owner_id")
+    cardDelete(id: ID!): Card @delete @guard @can(ability: "delete", find:"id")
+    cardUpdate(input: CardUpdateInput! @spread): Card @update @guard @can(ability: "update", find:"id")
 
     "Log in to a new session and get the user."
     login(email: String!, password: String!): User!
@@ -44,7 +44,6 @@ type Mutation {
 input CardAddInput {
     title: String!
     order: Int!
-    owner_id: ID!
     list_id: ID!
 }
 
