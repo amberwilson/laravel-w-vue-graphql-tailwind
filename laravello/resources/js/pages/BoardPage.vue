@@ -15,7 +15,10 @@
         class="mr-2 w-1/3 flex justify-end"
       >
         <div v-if="user.id">
-          <button class="header-btn">
+          <button
+            class="header-btn"
+            @click="logout"
+          >
             Logout
           </button>
         </div>
@@ -64,11 +67,12 @@
 <script setup>
 import CardList from '@components/CardList'
 import { useUserStore } from '@stores/user'
-import { useQuery } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
+import { useMutation, useQuery } from '@vue/apollo-composable'
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import BOARD_QUERY from '../gql/BoardWithListsAndCards.gql'
+import LOGOUT from '../gql/Logout.gql'
+import { graphQLErrors } from '../utils.js'
 
 const user = useUserStore()
 
@@ -81,8 +85,22 @@ const {
 
 const board = computed(() => result.value?.board ?? null)
 
-window.gqlhook = gql
+const {
+  mutate: logoutMutation,
+  onError: onLogoutError,
+  onDone: onLogoutDone,
+} = useMutation(LOGOUT)
 
+onLogoutError((error) => alert(graphQLErrors(error).map(err => err.message).join(' ')))
+
+onLogoutDone(() => {
+  user.clearUser()
+  router.push({ name: 'login' })
+})
+
+function logout () {
+  logoutMutation()
+}
 </script>
 
 <style scoped>
