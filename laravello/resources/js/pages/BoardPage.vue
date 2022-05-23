@@ -75,19 +75,20 @@ import CardList from '@components/CardList'
 import { useUserStore } from '@stores/user'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import BOARD_QUERY from '../gql/BoardWithListsAndCards.gql'
 import LOGOUT from '../gql/Logout.gql'
 import { colorMap500, graphQlErrors } from '../utils.js'
 
 const user = useUserStore()
 
+const route = useRoute()
 const router = useRouter()
 
 const {
   result, // error,
   loading,
-} = useQuery(BOARD_QUERY, { id: 1 })
+} = useQuery(BOARD_QUERY, { id: route.params.id })
 
 const board = computed(() => result.value?.board ?? null)
 

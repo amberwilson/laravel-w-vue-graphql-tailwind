@@ -5,7 +5,7 @@ import { useUserStore } from '@stores/user'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-    { path: '/', name: 'board', component: BoardPage },
+    { path: '/boards/:id', name: 'board', component: BoardPage },
     {
         path: '/login',
         name: 'login',
