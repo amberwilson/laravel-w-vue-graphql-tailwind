@@ -23,7 +23,7 @@ export const useUserStore = defineStore('user', {
          */
         setUser (id, email, name) {
             this.$patch({
-                id: Number(id), email, name,
+                id: +id, email, name,
             })
         },
 
