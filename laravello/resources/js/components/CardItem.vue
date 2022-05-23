@@ -6,6 +6,7 @@
     >
       <div>{{ card.title }}</div>
       <div
+        v-if="+user.id === +card.owner.id"
         class="flex font-bold opacity-0 group-hover:opacity-100 transition-opacity ease-out duration-500"
       >
         <div
@@ -37,6 +38,7 @@
 
 <script setup>
 import CardEditor from '@components/CardEditor'
+import { useUserStore } from '@stores/user.js'
 import { useMutation } from '@vue/apollo-composable'
 import { defineProps, ref } from 'vue'
 import CARD_DELETE from '../gql/CardDelete.gql'
@@ -47,6 +49,7 @@ const props = defineProps({
     required: true,
   },
 })
+const user = useUserStore()
 const isEditing = ref(false)
 
 const { mutate: cardDeleteMutation } = useMutation(CARD_DELETE, {
