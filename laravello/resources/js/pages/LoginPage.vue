@@ -60,7 +60,7 @@ import { useMutation } from '@vue/apollo-composable'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import LOGIN from '../gql/Login.gql'
-import { graphQLErrors } from '../utils.js'
+import { graphQlErrors } from '../utils.js'
 
 const email = ref('general34@example.org')
 const password = ref('password')
@@ -72,7 +72,7 @@ const user = useUserStore()
 
 const { mutate: loginMutation, onError, onDone } = useMutation(LOGIN)
 
-onError((error) => errors.value = graphQLErrors(error))
+onError((error) => errors.value = graphQlErrors(error))
 
 onDone((result) => {
   errors.value = []

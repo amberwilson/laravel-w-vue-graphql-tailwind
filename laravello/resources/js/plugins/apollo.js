@@ -1,5 +1,8 @@
 import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
+import { useUserStore } from '@stores/user'
+import { AuthenticationError, graphQlErrors } from '../utils.js'
+import { router } from './router.js'
 
 // Reference : https://www.apollographql.com/docs/react/data/error-handling/
 
@@ -10,18 +13,15 @@ const httpLink = new HttpLink({
 })
 
 const errorLink = onError((err) => {
-    const { graphQLErrors, networkError } = err
-    if (graphQLErrors)
-        graphQLErrors.forEach(({ message }) =>
-            console.error(
-                {
-                    message: `[GraphQL error]: Message: ${message}`,
-                    fullError: err,
-                },
-            ),
-        )
-
-    if (networkError) console.error(`[Network error]: ${networkError}`)
+    try {
+        graphQlErrors(err)
+    } catch (err) {
+        if (err instanceof AuthenticationError) {
+            const user = useUserStore()
+            user.clearUser()
+            router.push({ name: 'login' })
+        }
+    }
 })
 
 export const apolloClient = new ApolloClient({

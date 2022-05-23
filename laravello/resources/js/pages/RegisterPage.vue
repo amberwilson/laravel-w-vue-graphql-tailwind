@@ -66,7 +66,7 @@ import { useMutation } from '@vue/apollo-composable'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import REGISTER from '../gql/Register.gql'
-import { graphQLErrors } from '../utils.js'
+import { graphQlErrors } from '../utils.js'
 
 const email = ref()
 const name = ref()
@@ -77,7 +77,7 @@ const router = useRouter()
 
 const { mutate: registerMutation, onError, onDone } = useMutation(REGISTER)
 
-onError((error) => errors.value = graphQLErrors(error))
+onError((error) => errors.value = graphQlErrors(error))
 
 onDone(() => {
   errors.value = []

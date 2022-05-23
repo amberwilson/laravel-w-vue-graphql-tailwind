@@ -78,7 +78,7 @@ import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import BOARD_QUERY from '../gql/BoardWithListsAndCards.gql'
 import LOGOUT from '../gql/Logout.gql'
-import { graphQLErrors } from '../utils.js'
+import { colorMap500, graphQlErrors } from '../utils.js'
 
 const user = useUserStore()
 
@@ -97,7 +97,7 @@ const {
   onDone: onLogoutDone,
 } = useMutation(LOGOUT)
 
-onLogoutError((error) => alert(graphQLErrors(error).map(err => err.message).join(' ')))
+onLogoutError((error) => alert(graphQlErrors(error).map(err => err.message).join(' ')))
 
 onLogoutDone(() => {
   user.clearUser()

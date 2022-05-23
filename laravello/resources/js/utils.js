@@ -1,8 +1,10 @@
-// fullError.response.errors[0].extensions.validation.email[0]
-
-export function graphQLErrors (error) {
+export function graphQlErrors (error) {
     const hasInternal = errors => errors.some(e => e.isInternal)
     const replaceInternal = (errors, err) => hasInternal(errors) ? errors.filter(e => !e.isInternal).concat(err) : errors
+
+    if (error?.networkError && error.networkError.statusCode === 419) {
+        throw new AuthenticationError('Unauthenticated')
+    }
 
     return replaceInternal((error.graphQLErrors || []).map(err => {
         if ('validation' === err.extensions?.category) {
