@@ -15,6 +15,7 @@ const path = require('path')
 mix.alias({
     '@components': path.join(__dirname, 'resources/js/components'),
     '@pages': path.join(__dirname, 'resources/js/pages'),
+    '@stores': path.join(__dirname, 'resources/js/stores'),
 })
 
 mix.js('resources/js/app.js', 'js')
