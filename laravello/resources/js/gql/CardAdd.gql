@@ -1,5 +1,5 @@
 mutation CardAdd($title: String!, $order: Int!, $listId: ID!) {
-    cardAdd(input: {title: $title, order: $order, list_id: $listId, owner_id: 1}) {
+    cardAdd(input: {title: $title, order: $order, list_id: $listId}) {
         id
         title
         order
