@@ -34,6 +34,8 @@ router.beforeEach(async (to) => {
 
             if (!me) {
                 // session expired
+                user.clearUser()
+
                 return { name: 'login' }
             }
 
