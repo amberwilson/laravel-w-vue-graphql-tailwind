@@ -14,7 +14,13 @@
       <div
         class="mr-2 w-1/3 flex justify-end"
       >
-        <div v-if="user.id">
+        <div
+          v-if="user.id"
+          class="flex items-center"
+        >
+          <div class="text-sm mr-2">
+            {{ user.name }}
+          </div>
           <button
             class="header-btn"
             @click="logout"
