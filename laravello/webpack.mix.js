@@ -45,4 +45,11 @@ mix.extend('graphql', new class {
         }
     }
 })
+
 mix.graphql()
+
+if (!mix.inProduction()) {
+    mix.webpackConfig({
+        devtool: 'inline-source-map',
+    })
+}
