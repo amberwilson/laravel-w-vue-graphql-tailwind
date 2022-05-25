@@ -81,7 +81,7 @@ onError((error) => errors.value = graphQlErrors(error))
 
 onDone(() => {
   errors.value = []
-  router.push({ name: 'board' })
+  router.push({ name: 'board', params: { id: 1 } })
 })
 
 function register () {

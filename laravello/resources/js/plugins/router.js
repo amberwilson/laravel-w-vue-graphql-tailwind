@@ -40,7 +40,7 @@ router.beforeEach(async (to) => {
             }
 
             if (to.name !== 'board') {
-                return { name: 'board' }
+                return { name: 'board', params: { id: 1 } }
             }
         } catch (exception) {
             console.log('Exception while trying to fetch the user', exception)

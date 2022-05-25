@@ -80,7 +80,7 @@ onDone((result) => {
   const { id, email, name } = result.data.login
   user.setUser(id, email, name)
 
-  router.push({ name: 'board' })
+  router.push({ name: 'board', params: { id: 1 } })
 })
 
 function authenticate () {
