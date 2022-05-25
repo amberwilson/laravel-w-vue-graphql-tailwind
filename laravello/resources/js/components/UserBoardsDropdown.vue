@@ -10,18 +10,23 @@
       BOARDS
     </div>
     <div v-if="boards">
-      <div
+      <router-link
         v-for="board in boards"
         :key="board.id"
-        class="flex m-2 bg-teal-100 rounded-sm opacity-100 hover:opacity-75 text-gray-700 cursor-pointer"
+        :to="{name: 'board', params: {id: board.id}}"
+        :class="[`bg-${board.color}-100`]"
+        class="flex m-2 rounded-sm opacity-100 hover:opacity-75 text-gray-700 cursor-pointer"
       >
-        <div class="bg-teal-200 w-10 rounded-sm rounded-r-none" />
+        <div
+          :class="[`bg-${board.color}-200`]"
+          class="w-10 rounded-sm rounded-r-none"
+        />
         <div
           class="p-2 font-bold"
         >
           {{ board.title }}
         </div>
-      </div>
+      </router-link>
     </div>
     <div v-else-if="loading">
       Loading...
