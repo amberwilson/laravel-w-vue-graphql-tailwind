@@ -1,0 +1,57 @@
+<template>
+  <button
+    class="header-btn"
+    @click="showMenu = !showMenu"
+  >
+    Boards
+  </button>
+  <DropdownMenu :show="showMenu">
+    <div class="text-gray-600 text-xs font-semibold mb-2 ml-2">
+      BOARDS
+    </div>
+    <div v-if="boards">
+      <div
+        v-for="board in boards"
+        :key="board.id"
+        class="flex m-2 bg-teal-100 rounded-sm opacity-100 hover:opacity-75 text-gray-700 cursor-pointer"
+      >
+        <div class="bg-teal-200 w-10 rounded-sm rounded-r-none" />
+        <div
+          class="p-2 font-bold"
+        >
+          {{ board.title }}
+        </div>
+      </div>
+    </div>
+    <div v-else-if="loading">
+      Loading...
+    </div>
+    <div v-else-if="error">
+      Oops... there was an error while retrieving your
+      boards.
+    </div>
+  </DropdownMenu>
+</template>
+
+<script setup>
+import DropdownMenu from '@components/DropdownMenu'
+import { useUserStore } from '@stores/user.js'
+import { useQuery } from '@vue/apollo-composable'
+import { computed, ref } from 'vue'
+import USER_BOARDS from '../gql/UserBoards.gql'
+
+const user = useUserStore()
+
+const showMenu = ref(false)
+
+const { result, loading, error } = useQuery(USER_BOARDS, { ownerId: user.id })
+
+const boards = computed(() => {
+  return result.value?.userBoards ?? []
+})
+
+</script>
+
+<style scoped>
+
+</style>

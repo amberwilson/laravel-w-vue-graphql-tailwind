@@ -21,6 +21,8 @@ type Query {
     board(id: ID! @eq): Board @find @guard
 
     me: User @auth
+
+    userBoards(owner_id: ID! @where): [Board!] @all
 }
 
 type Mutation {

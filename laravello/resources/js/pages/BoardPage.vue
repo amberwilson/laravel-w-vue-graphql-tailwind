@@ -9,7 +9,7 @@
       <div
         class="ml-2 w-1/3"
       >
-        x
+        <UserBoardsDropdown />
       </div>
       <div class="text-lg opacity-50 cursor-pointer hover:opacity-75">
         Laravello
@@ -75,6 +75,7 @@
 
 <script setup>
 import CardList from '@components/CardList'
+import UserBoardsDropdown from '@components/UserBoardsDropdown'
 import { useUserStore } from '@stores/user'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { computed } from 'vue'
