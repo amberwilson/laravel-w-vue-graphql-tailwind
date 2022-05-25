@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full flex flex-col items-stretch bg-gray-500"
+    class="h-full flex flex-col items-stretch"
     :class="bgColor"
   >
     <div
@@ -89,7 +89,7 @@ const route = useRoute()
 const router = useRouter()
 
 const bgColor = computed(() => ({
-  'bg-gray-500': loading,
+  'bg-gray-500': loading.value,
   [colorMap500[board.value?.color]]: true,
 }))
 
