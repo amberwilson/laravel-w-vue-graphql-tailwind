@@ -24,7 +24,7 @@ type Query {
 }
 
 type Mutation {
-    cardAdd(input: CardAddInput! @spread): Card @create @guard @inject(context: "user.id", name: "owner_id")
+    cardAdd(input: CardAddInput! @spread): Card @create @guard @inject(context: "user.id", name: "owner_id") @can(ability: "createCard", model: "CardList", find: "list_id")
     cardDelete(id: ID!): Card @delete @guard @can(ability: "delete", find:"id")
     cardUpdate(input: CardUpdateInput! @spread): Card @update @guard @can(ability: "update", find:"id")
 

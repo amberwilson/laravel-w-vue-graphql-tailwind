@@ -17,7 +17,7 @@
       @closed="closeEditor"
     />
     <CardAddButton
-      v-else
+      v-if="!isEditing && +list.board.owner.id === +user.id"
       @click="isEditing = true"
     />
   </div>
@@ -27,6 +27,7 @@
 import CardAddButton from '@components/CardAddButton'
 import CardEditor from '@components/CardEditor'
 import CardItem from '@components/CardItem'
+import { useUserStore } from '@stores/user.js'
 import { defineProps, ref } from 'vue'
 
 defineProps({
@@ -35,6 +36,7 @@ defineProps({
     required: true,
   },
 })
+const user = useUserStore()
 
 const isEditing = ref(false)
 
