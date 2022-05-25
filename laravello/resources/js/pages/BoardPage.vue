@@ -55,7 +55,7 @@
       class="h-full flex flex-1 flex-col items-stretch"
     >
       <div class="mx-4 mb-2 text-white font-bold text-lg">
-        <span v-if="loading">Loading...</span><span
+        <span v-if="loading">Loading...</span><span v-else-if="error">Oops... that board couldn't be loaded</span><span
           v-else
         >{{ board.title }}</span>
       </div>
@@ -95,9 +95,10 @@ const bgColor = computed(() => ({
 }))
 
 const {
-  result, // error,
-  loading,
-} = useQuery(BOARD_QUERY, { id: route.params.id })
+  result, error, loading,
+} = useQuery(BOARD_QUERY, () => ({
+  id: route.params.id,
+}))
 
 const board = computed(() => result.value?.board ?? null)
 
