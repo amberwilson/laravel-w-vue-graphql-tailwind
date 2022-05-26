@@ -22,7 +22,7 @@ type Query {
 
     me: User @auth
 
-    userBoards(owner_id: ID! @where): [Board!] @all
+    userBoards(owner_id: ID! @where): [Board!] @all  @can(ability: "viewOwnedBoards", model: "User", find: "owner_id")
 }
 
 type Mutation {
