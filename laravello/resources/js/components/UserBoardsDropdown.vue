@@ -5,7 +5,10 @@
   >
     Boards
   </button>
-  <DropdownMenu :show="showMenu">
+  <DropdownMenu
+    :show="showMenu"
+    @closed="showMenu = false"
+  >
     <div class="text-gray-600 text-xs font-semibold mb-2 ml-2">
       BOARDS
     </div>
@@ -16,6 +19,7 @@
         :to="{name: 'board', params: {id: board.id}}"
         :class="[`bg-${board.color}-100`]"
         class="flex m-2 rounded-sm opacity-100 hover:opacity-75 text-gray-700 cursor-pointer"
+        @click="showMenu = false"
       >
         <div
           :class="[`bg-${board.color}-200`]"
