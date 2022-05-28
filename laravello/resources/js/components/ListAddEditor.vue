@@ -23,7 +23,8 @@
 
     <div class="flex">
       <button
-        class="mt-2 rounded-sm py-1 px-3 bg-blue-700 text-white cursor-pointer hover:bg-blue-500 outline-none"
+        class="mt-2 rounded-sm py-1 px-3 bg-blue-700 text-white cursor-pointer hover:bg-blue-500 outline-none disabled:opacity-25"
+        :disabled="cannotSave"
         @click="createList"
       >
         Add List
@@ -39,15 +40,48 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { useMutation } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
+import { computed, defineProps, ref } from 'vue'
 import { directive as vClickAway } from 'vue3-click-away'
+import LIST_ADD from '../gql/ListAdd.gql'
 
+const props = defineProps({ board: { type: Object, required: true } })
 const isEditing = ref(false)
 const title = ref(null)
 
 const vFocus = {
   mounted: (el) => el.focus(),
 }
+
+const { mutate: listAddMutation } = useMutation(LIST_ADD, {
+  update: (cache, { data: { listAdd } }) => {
+    cache.modify({
+      id: cache.identify(props.board),
+      fields: {
+        lists (existingListsRefs = [], { readField }) {
+          const newListRef = cache.writeFragment({
+            data: listAdd,
+            fragment: gql`
+              fragment NewCardList on CardList {
+                id
+                title
+              }
+            `,
+          })
+
+          if (existingListsRefs.some(
+            ref => readField('id', ref) === listAdd.id,
+          )) {
+            return existingListsRefs
+          }
+
+          return [...existingListsRefs, newListRef]
+        },
+      },
+    })
+  },
+})
 
 function hideEditor () {
   isEditing.value = false
@@ -58,10 +92,15 @@ function startEditing () {
   isEditing.value = true
 }
 
-function createList () {
-  hideEditor()
+const cannotSave = computed(() => title.value === null || title.value === '')
 
-  console.log('save here', title.value)
+function createList () {
+  listAddMutation({
+    title: title.value,
+    boardId: props.board.id,
+  })
+
+  hideEditor()
 }
 </script>
 

@@ -69,7 +69,7 @@
           :list="list"
         />
 
-        <ListAddEditor />
+        <ListAddEditor :board="board" />
       </div>
     </div>
   </div>
