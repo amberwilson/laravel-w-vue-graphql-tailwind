@@ -68,6 +68,8 @@
           :key="list.id"
           :list="list"
         />
+
+        <ListAddEditor />
       </div>
     </div>
   </div>
@@ -75,6 +77,7 @@
 
 <script setup>
 import CardList from '@components/CardList'
+import ListAddEditor from '@components/ListAddEditor'
 import UserBoardsDropdown from '@components/UserBoardsDropdown'
 import { useUserStore } from '@stores/user'
 import { useMutation, useQuery } from '@vue/apollo-composable'
