@@ -30,7 +30,9 @@ type Mutation {
     cardDelete(id: ID!): Card @delete @guard @can(ability: "delete", find:"id")
     cardUpdate(input: CardUpdateInput! @spread): Card @update @guard @can(ability: "update", find:"id")
 
-    boardAdd(title: String! color: String!): Board! @create @guard
+    boardAdd(title: String! @rules(apply: ["required"]) color: String!): Board! @create @guard
+
+    listAdd(title: String! @rules(apply: ["required"]) board_id: ID!  @rules(apply: ["required", "exists:boards,id"])): CardList! @create @guard
 
     "Log in to a new session and get the user."
     login(email: String!, password: String!): User!
